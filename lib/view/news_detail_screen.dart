@@ -1,12 +1,8 @@
-import 'dart:html';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:my_news_app/webview.dart';
-
-import '../models/categories_new_model.dart';
 
 class NewsDetailScreen extends StatefulWidget {
   String newsImage;
@@ -127,7 +123,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                 SizedBox(
                   height: Kheight * 0.03,
                 ),
-                Text('${widget.newsDesc}',
+                Text('cksc${widget.newsDesc}',
                     style: GoogleFonts.poppins(
                         fontSize: 15,
                         color: Colors.black87,
