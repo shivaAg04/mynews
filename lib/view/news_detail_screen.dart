@@ -1,12 +1,12 @@
-
+import 'dart:html';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:my_news_app/webview.dart';
 
 import '../models/categories_new_model.dart';
-
 
 class NewsDetailScreen extends StatefulWidget {
   String newsImage;
@@ -16,16 +16,22 @@ class NewsDetailScreen extends StatefulWidget {
   String newsDesc;
   String newsContent;
   String newsSource;
-  NewsDetailScreen(this.newsImage, this.newsTitle, this.newsDate,
-      this.newsAuthor, this.newsDesc, this.newsContent, this.newsSource);
-
+  String url;
+  NewsDetailScreen(
+      this.newsImage,
+      this.newsTitle,
+      this.newsDate,
+      this.newsAuthor,
+      this.newsDesc,
+      this.newsContent,
+      this.newsSource,
+      this.url);
 
   @override
   State<NewsDetailScreen> createState() => _NewsDetailScreenState();
 }
 
 class _NewsDetailScreenState extends State<NewsDetailScreen> {
-
   final format = new DateFormat('MMMM dd,yyyy');
 
   @override
@@ -62,7 +68,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
               height: Kheight * 0.45,
               width: Kwidth,
               child: ClipRRect(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30)),
                 child: CachedNetworkImage(
@@ -138,6 +144,19 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                 SizedBox(
                   height: Kheight * 0.03,
                 ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NewsView(
+                                    url: widget.url,
+                                  )));
+                    },
+                    icon: const Icon(
+                      Icons.link,
+                      color: Colors.cyan,
+                    ))
               ],
             ),
           )

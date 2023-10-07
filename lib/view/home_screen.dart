@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:my_news_app/models/news_channel_headlines_model.dart';
 import 'package:my_news_app/view/cateogires_screen.dart';
 import 'package:my_news_app/view_model/news_view_model.dart';
+import 'package:my_news_app/webview.dart';
 
 import '../models/categories_new_model.dart';
 import 'news_detail_screen.dart';
@@ -17,7 +18,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-enum FilterList { bbcNews, aryNews, independent, reuters, cnn, alJazeera }
+enum FilterList { bbcNews, googlenews, independent, reuters, cnn, alJazeera }
 
 class _HomeScreenState extends State<HomeScreen> {
   NewsViewModel newsViewModel = NewsViewModel();
@@ -52,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           PopupMenuButton<FilterList>(
               initialValue: selectedMenu,
-              icon: Icon(
+              icon: const Icon(
                 Icons.more_vert,
                 color: Colors.black,
               ),
@@ -60,8 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (FilterList.bbcNews.name == item.name) {
                   name = 'bbc-news';
                 }
-                if (FilterList.aryNews.name == item.name) {
-                  name = 'ary-news';
+                if (FilterList.googlenews.name == item.name) {
+                  name = 'google-news';
                 }
 
                 if (FilterList.alJazeera.name == item.name) {
@@ -78,11 +79,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       value: FilterList.bbcNews,
                       child: Text('BBC News'),
                     ),
-                    PopupMenuItem<FilterList>(
-                      value: FilterList.aryNews,
-                      child: Text('Ary News'),
+                    const PopupMenuItem<FilterList>(
+                      value: FilterList.googlenews,
+                      child: Text('Google News'),
                     ),
-                    PopupMenuItem<FilterList>(
+                    const PopupMenuItem<FilterList>(
                       value: FilterList.alJazeera,
                       child: Text('Al-Jazeera News'),
                     ),
@@ -128,6 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 snapshot.data!.articles![index].content!;
                             String newsSource =
                                 snapshot.data!.articles![index].source!.name!;
+                            String url = snapshot.data!.articles![index].url!;
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -138,7 +140,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         newsAuthor,
                                         newsDesc,
                                         newsContent,
-                                        newsSource)));
+                                        newsSource,
+                                        url)));
                           },
                           child: SizedBox(
                             child: Stack(
@@ -160,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: spinKit2,
                                       ),
                                       errorWidget: (context, url, error) =>
-                                          Icon(
+                                          const Icon(
                                         Icons.error_outline,
                                         color: Colors.red,
                                       ),
@@ -177,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     child: Container(
                                       alignment: Alignment.bottomCenter,
-                                      padding: EdgeInsets.all(15),
+                                      padding: const EdgeInsets.all(15),
                                       height: height * .22,
                                       child: Column(
                                         mainAxisAlignment:
@@ -198,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   fontWeight: FontWeight.w700),
                                             ),
                                           ),
-                                          Spacer(),
+                                          const Spacer(),
                                           Container(
                                             width: width * 0.7,
                                             child: Row(
@@ -268,75 +271,87 @@ class _HomeScreenState extends State<HomeScreen> {
                         DateTime dateTime = DateTime.parse(snapshot
                             .data!.articles![index].publishedAt
                             .toString());
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
-                          child: Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: CachedNetworkImage(
-                                  imageUrl: snapshot
-                                      .data!.articles![index].urlToImage
-                                      .toString(),
-                                  fit: BoxFit.cover,
-                                  height: height * .18,
-                                  width: width * .3,
-                                  placeholder: (context, url) => Container(
-                                    child: Center(
-                                      child: SpinKitCircle(
-                                        size: 50,
-                                        color: Colors.blue,
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NewsView(
+                                          url: snapshot
+                                              .data!.articles![index].url,
+                                        )));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: CachedNetworkImage(
+                                    imageUrl: snapshot
+                                        .data!.articles![index].urlToImage
+                                        .toString(),
+                                    fit: BoxFit.cover,
+                                    height: height * .18,
+                                    width: width * .3,
+                                    placeholder: (context, url) => Container(
+                                      child: const Center(
+                                        child: SpinKitCircle(
+                                          size: 50,
+                                          color: Colors.blue,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  errorWidget: (context, url, error) => Icon(
-                                    Icons.error_outline,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  height: height * .18,
-                                  padding: EdgeInsets.only(left: 15),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        snapshot.data!.articles![index].title
-                                            .toString(),
-                                        maxLines: 3,
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 15,
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            snapshot.data!.articles![index]
-                                                .source!.name
-                                                .toString(),
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 14,
-                                                color: Colors.black54,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          Text(
-                                            format.format(dateTime),
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(
+                                      Icons.error_outline,
+                                      color: Colors.red,
+                                    ),
                                   ),
                                 ),
-                              )
-                            ],
+                                Expanded(
+                                  child: Container(
+                                    height: height * .18,
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          snapshot.data!.articles![index].title
+                                              .toString(),
+                                          maxLines: 3,
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 15,
+                                              color: Colors.black54,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        const Spacer(),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              snapshot.data!.articles![index]
+                                                  .source!.name
+                                                  .toString(),
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 14,
+                                                  color: Colors.black54,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            Text(
+                                              format.format(dateTime),
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         );
                       });

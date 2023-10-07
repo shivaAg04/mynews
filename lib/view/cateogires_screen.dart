@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:my_news_app/models/categories_new_model.dart';
+import 'package:my_news_app/webview.dart';
 
 import '../view_model/news_view_model.dart';
 
@@ -95,77 +96,92 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               .toString());
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 15),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: CachedNetworkImage(
-                                    imageUrl: snapshot
-                                        .data!.articles![index].urlToImage
-                                        .toString(),
-                                    fit: BoxFit.cover,
-                                    height: height * .18,
-                                    width: width * .3,
-                                    placeholder: (context, url) => Container(
-                                      child: Center(
-                                        child: SpinKitCircle(
-                                          size: 50,
-                                          color: Colors.blue,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => NewsView(
+                                              url: snapshot
+                                                  .data!.articles![index].url,
+                                            )));
+                              },
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: CachedNetworkImage(
+                                      imageUrl: snapshot
+                                          .data!.articles![index].urlToImage
+                                          .toString(),
+                                      fit: BoxFit.cover,
+                                      height: height * .18,
+                                      width: width * .3,
+                                      placeholder: (context, url) => Container(
+                                        child: Center(
+                                          child: SpinKitCircle(
+                                            size: 50,
+                                            color: Colors.blue,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    errorWidget: (context, url, error) => Icon(
-                                      Icons.error_outline,
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    height: height * .18,
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          snapshot.data!.articles![index].title
-                                              .toString(),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 3,
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 15,
-                                              color: Colors.black54,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                        Spacer(),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              overflow: TextOverflow.ellipsis,
-                                              snapshot.data!.articles![index]
-                                                  .source!.name
-                                                  .toString(),
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 14,
-                                                  color: Colors.black54,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                            Text(
-                                              format.format(dateTime),
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.poppins(
-                                                  color: Colors.blue,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
-                                        )
-                                      ],
+                                      errorWidget: (context, url, error) =>
+                                          Icon(
+                                        Icons.error_outline,
+                                        color: Colors.red,
+                                      ),
                                     ),
                                   ),
-                                )
-                              ],
+                                  Expanded(
+                                    child: Container(
+                                      height: height * .18,
+                                      padding: EdgeInsets.only(left: 15),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            snapshot
+                                                .data!.articles![index].title
+                                                .toString(),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 3,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 15,
+                                                color: Colors.black54,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          Spacer(),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                overflow: TextOverflow.ellipsis,
+                                                snapshot.data!.articles![index]
+                                                    .source!.name
+                                                    .toString(),
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 14,
+                                                    color: Colors.black54,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              Text(
+                                                format.format(dateTime),
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.poppins(
+                                                    color: Colors.blue,
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           );
                         });
