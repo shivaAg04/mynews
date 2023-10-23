@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "com.example.my_news_app",
+  "applicationId": "com.shiva.my_news_app",
   "variantName": "debug",
   "elements": [
     {

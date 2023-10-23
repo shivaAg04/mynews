@@ -1,11 +1,11 @@
-#Sat Oct 07 23:36:28 IST 2023
-path.4=4/classes.dex
-path.3=1/classes.dex
+#Sun Oct 08 00:44:08 IST 2023
+path.4=1/classes.dex
+path.3=2/classes.dex
 path.2=0/classes.dex
 path.1=0/classes.dex
 path.0=classes.dex
-base.4=C\:\\Users\\ACER\\Desktop\\Flutter-News-App-main\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\4\\classes.dex
-base.3=C\:\\Users\\ACER\\Desktop\\Flutter-News-App-main\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
+base.4=C\:\\Users\\ACER\\Desktop\\Flutter-News-App-main\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
+base.3=C\:\\Users\\ACER\\Desktop\\Flutter-News-App-main\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
 base.2=C\:\\Users\\ACER\\Desktop\\Flutter-News-App-main\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
 base.1=C\:\\Users\\ACER\\Desktop\\Flutter-News-App-main\\build\\app\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
 base.0=C\:\\Users\\ACER\\Desktop\\Flutter-News-App-main\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex

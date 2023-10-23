@@ -265,6 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 } else {
                   return ListView.builder(
+                      physics: ClampingScrollPhysics(),
                       itemCount: snapshot.data!.articles!.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
